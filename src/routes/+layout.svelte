@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '../app.css';
 	export let data: { user: string | null };
 </script>
 
@@ -9,15 +10,14 @@
 			{#if data.user}
 				<div class="flex items-center gap-2">
 					<p>Welcome, {data.user}!</p>
-					<a href="/logout" class="text-sm text-red-200 hover:underline"
-						>Logout</a
-					>
+					<a href="/logout" class="text-sm text-red-200 hover:underline">Logout</a>
 				</div>
 			{/if}
 		</div>
-    <div>
-      <a href="/auth/login" class="text-sm text-red-200 hover:underline">LOGIN PAGE</a>
-    </div>
+		<div>
+			<a href="/auth/login" class="text-sm text-red-200 hover:underline">LOGIN</a>
+			<a href="/auth/register" class="text-sm text-red-200 hover:underline">REGISTER MEMBER</a>
+		</div>
 	</header>
 
 	<main class="container mx-auto flex-grow p-4">
