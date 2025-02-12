@@ -1,21 +1,29 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { user } from '$lib/stores';
+
 	const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 	let email = '';
 	let password = '';
+	let error: string | null = null;
 
 	const login = async () => {
 		try {
 			const response = await fetch(`${API_BASE}/api/members/login`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
+				credentials: 'include',
 				body: JSON.stringify({ email, password })
 			});
+
 			if (!response.ok) throw new Error('Invalid email or password.');
+
 			const data = await response.json();
-			alert('Login successful!');
-			document.cookie = `sessionToken=${data.sessionToken}`;
-			window.location.href = '/';
+			user.set(data.user); // Store user data in global store
+      alert('Login successful!');
+
+			goto('/');
 		} catch (err) {
 			alert((err as Error).message);
 		}
