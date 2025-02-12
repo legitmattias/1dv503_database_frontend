@@ -16,7 +16,7 @@
 			{/if}
 		</div>
     <div>
-      <a href="/login" class="text-sm text-red-200 hover:underline">LOGIN PAGE</a>
+      <a href="/auth/login" class="text-sm text-red-200 hover:underline">LOGIN PAGE</a>
     </div>
 	</header>
 
