@@ -1,6 +1,6 @@
 {
 	"name": "assignment2-frontend",
-  "author": "Mattias Ubbesen <mu222cu@student.lnu.se>",
+	"author": "Mattias Ubbesen <mu222cu@student.lnu.se>",
 	"private": true,
 	"version": "0.0.1",
 	"type": "module",
@@ -17,7 +17,7 @@
 		"@eslint/compat": "^1.2.3",
 		"@eslint/js": "^9.17.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
-		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/kit": "^2.17.1",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
 		"autoprefixer": "^10.4.20",
 		"eslint": "^9.7.0",
