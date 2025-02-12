@@ -1,5 +1,5 @@
 <script lang="ts">
-  const API_BASE = import.meta.env.VITE_BACKEND_URL;
+	const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 	let email = '';
 	let password = '';
@@ -24,21 +24,9 @@
 
 <div class="mx-auto max-w-md rounded bg-white p-6 shadow">
 	<h2 class="mb-4 text-lg font-bold">Login</h2>
-	<form on:submit|preventDefault={() => login()} class="flex flex-col gap-4">
-		<input
-			type="email"
-			bind:value={email}
-			class="rounded border p-2"
-			placeholder="Email"
-		/>
-		<input
-			type="password"
-			bind:value={password}
-			class="rounded border p-2"
-			placeholder="Password"
-		/>
-		<button type="submit" class="rounded bg-blue-600 px-4 py-2 text-white">
-			Login
-		</button>
+	<form on:submit|preventDefault={login} class="flex flex-col gap-4">
+		<input type="email" bind:value={email} placeholder="Email" required class="rounded border p-2" />
+		<input type="password" bind:value={password} placeholder="Password" required class="rounded border p-2" />
+		<button type="submit" class="rounded bg-blue-600 px-4 py-2 text-white">Login</button>
 	</form>
 </div>
