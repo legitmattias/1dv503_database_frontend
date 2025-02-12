@@ -1,5 +1,5 @@
 <script lang="ts">
-  const API_BASE = import.meta.env.VITE_BACKEND_URL;
+	const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 	import { onMount } from 'svelte';
 
@@ -18,8 +18,8 @@
 	onMount(async () => {
 		try {
 			const response = await fetch(`${API_BASE}/api/books`, {
-        credentials: "include"
-    });
+				credentials: 'include'
+			});
 			if (!response.ok) throw new Error('Failed to fetch books.');
 			books = await response.json();
 		} catch (err) {
@@ -52,10 +52,7 @@
 				<h2 class="text-lg font-semibold">{book.title}</h2>
 				<p class="text-sm text-gray-600">by {book.author}</p>
 				<p class="font-bold text-blue-600">€{book.price.toFixed(2)}</p>
-				<button
-					class="mt-2 rounded bg-blue-600 px-4 py-2 text-white"
-					on:click={() => addToCart(book.isbn)}
-				>
+				<button class="mt-2 rounded bg-blue-600 px-4 py-2 text-white" on:click={() => addToCart(book.isbn)}>
 					Add to Cart
 				</button>
 			</div>
