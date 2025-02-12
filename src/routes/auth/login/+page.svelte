@@ -1,10 +1,12 @@
 <script lang="ts">
+  const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 	let email = '';
 	let password = '';
 
 	const login = async () => {
 		try {
-			const response = await fetch('http://localhost:3000/api/members/login', {
+			const response = await fetch(`${API_BASE}/api/members/login`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ email, password })

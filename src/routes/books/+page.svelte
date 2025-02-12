@@ -1,4 +1,6 @@
 <script lang="ts">
+  const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
 	import { onMount } from 'svelte';
 
 	type Book = {
@@ -15,7 +17,7 @@
 
 	onMount(async () => {
 		try {
-			const response = await fetch('http://localhost:3000/api/books', {
+			const response = await fetch(`${API_BASE}/api/books`, {
         credentials: "include"
     });
 			if (!response.ok) throw new Error('Failed to fetch books.');
@@ -27,7 +29,7 @@
 
 	const addToCart = async (isbn: string) => {
 		try {
-			const response = await fetch('http://localhost:3000/api/cart', {
+			const response = await fetch(`${API_BASE}/api/cart`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
