@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
+	import { goto } from '$app/navigation';
 
 	type CartItem = {
 		isbn: string;
@@ -48,59 +48,53 @@
 	};
 
 	// Checkout (places order)
-const checkout = async () => {
-	try {
-		const response = await fetch(`${API_BASE}/api/orders/checkout`, {
-			method: 'POST',
-			credentials: 'include'
-		});
-		if (!response.ok) throw new Error('Failed to place order.');
-		
-		const data = await response.json();
-		alert(`Order placed successfully! Order ID: ${data.orderId}`);
+	const checkout = async () => {
+		try {
+			const response = await fetch(`${API_BASE}/api/orders/checkout`, {
+				method: 'POST',
+				credentials: 'include'
+			});
+			if (!response.ok) throw new Error('Failed to place order.');
 
-		// Redirect to order confirmation page
-		goto(`/order/${data.orderId}`);
-	} catch (err) {
-		error = (err as Error).message;
-	}
-};
+			const data = await response.json();
+			alert(`Order placed successfully! Order ID: ${data.orderId}`);
 
+			// Redirect to order confirmation page
+			goto(`/order/${data.orderId}`);
+		} catch (err) {
+			error = (err as Error).message;
+		}
+	};
 </script>
 
 {#if error}
 	<p class="text-red-600">{error}</p>
 {:else}
-	<div class="max-w-3xl mx-auto bg-white p-6 shadow rounded">
-		<h2 class="text-xl font-bold mb-4">Your Cart</h2>
+	<div class="mx-auto max-w-3xl rounded bg-white p-6 shadow">
+		<h2 class="mb-4 text-xl font-bold">Your Cart</h2>
 
 		{#if cart.length === 0}
 			<p class="text-gray-600">Your cart is empty.</p>
 		{:else}
 			<ul class="divide-y divide-gray-300">
 				{#each cart as item}
-					<li class="flex justify-between items-center p-4">
+					<li class="flex items-center justify-between p-4">
 						<div>
 							<h3 class="text-lg font-semibold">{item.title}</h3>
 							<p class="text-sm text-gray-600">by {item.author}</p>
-							<p class="text-blue-600 font-bold">{(item.price * item.qty).toFixed(2)} kr</p>
+							<p class="font-bold text-blue-600">{(item.price * item.qty).toFixed(2)} kr</p>
 							<p class="text-gray-600">Qty: {item.qty}</p>
 						</div>
-						<button
-							class="bg-red-600 text-white px-4 py-2 rounded"
-							on:click={() => removeFromCart(item.isbn)}
-						>
+						<button class="rounded bg-red-600 px-4 py-2 text-white" on:click={() => removeFromCart(item.isbn)}>
 							Remove
 						</button>
 					</li>
 				{/each}
 			</ul>
 
-			<div class="flex justify-between items-center mt-4 p-4 border-t">
+			<div class="mt-4 flex items-center justify-between border-t p-4">
 				<h3 class="text-lg font-bold">Total: {totalPrice.toFixed(2)} kr</h3>
-				<button class="bg-green-600 text-white px-6 py-2 rounded" on:click={checkout}>
-					Checkout
-				</button>
+				<button class="rounded bg-green-600 px-6 py-2 text-white" on:click={checkout}> Checkout </button>
 			</div>
 		{/if}
 	</div>

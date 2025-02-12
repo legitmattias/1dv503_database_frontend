@@ -21,7 +21,7 @@
 
 			const data = await response.json();
 			user.set(data.user); // Store user data in global store
-      alert('Login successful!');
+			alert('Login successful!');
 
 			goto('/');
 		} catch (err) {

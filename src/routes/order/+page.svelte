@@ -1,6 +1,6 @@
 <!-- src/routes/order/+page.svelte -->
 <script>
-  // Placeholder script
+	// Placeholder script
 </script>
 
 <h1>Orders Overview</h1>
