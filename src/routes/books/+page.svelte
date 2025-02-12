@@ -51,7 +51,7 @@
 			<div class="rounded bg-white p-4 shadow">
 				<h2 class="text-lg font-semibold">{book.title}</h2>
 				<p class="text-sm text-gray-600">by {book.author}</p>
-				<p class="font-bold text-blue-600">€{book.price.toFixed(2)}</p>
+				<p class="font-bold text-blue-600">{book.price.toFixed(2)} kr</p>
 				<button class="mt-2 rounded bg-blue-600 px-4 py-2 text-white" on:click={() => addToCart(book.isbn)}>
 					Add to Cart
 				</button>
