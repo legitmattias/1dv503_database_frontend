@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { goto } from '$app/navigation';
-  import { showFeedback } from '$lib/stores';
+	import { goto } from '$app/navigation';
+	import { showFeedback } from '$lib/stores';
 
 	const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
@@ -31,12 +31,12 @@
 			});
 
 			if (!response.ok) throw new Error('Failed to register.');
-      showFeedback('Registration successful! You can now log in.', 'success');
+			showFeedback('Registration successful! You can now log in.', 'success');
 			goto('/');
 		} catch (err) {
 			if (err instanceof TypeError && err.message.includes('fetch')) {
 				showFeedback('Failed to connect to the server. Please check your internet or try again later.', 'error');
-      } else {
+			} else {
 				showFeedback((err as Error).message, 'error');
 			}
 		}

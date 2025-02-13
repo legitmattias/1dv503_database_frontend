@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
-  import { showFeedback } from '$lib/stores';
+	import { showFeedback } from '$lib/stores';
 
 	type CartItem = {
 		isbn: string;
@@ -43,9 +43,9 @@
 			if (!response.ok) throw new Error('Failed to remove item.');
 			cart = cart.filter((item) => item.isbn !== isbn);
 			totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-      showFeedback('Item(s) removed successfully!', 'success');
+			showFeedback('Item(s) removed successfully!', 'success');
 		} catch (err) {
-      showFeedback(`Failed to remove item(s): ${(err as Error).message}`, 'error');
+			showFeedback(`Failed to remove item(s): ${(err as Error).message}`, 'error');
 		}
 	};
 
@@ -59,7 +59,7 @@
 			if (!response.ok) throw new Error('Failed to place order.');
 
 			const data = await response.json();
-      showFeedback(`Order placed successfully! Order ID: ${data.orderId}`, 'success');
+			showFeedback(`Order placed successfully! Order ID: ${data.orderId}`, 'success');
 
 			// Redirect to order confirmation page
 			goto(`/order/${data.orderId}`);
