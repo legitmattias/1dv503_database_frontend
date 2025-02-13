@@ -1,9 +1,13 @@
 <script lang="ts">
 	import '../app.css';
 	import { goto } from '$app/navigation';
-	import { user } from '$lib/stores';
+	import { user, loadUser } from '$lib/stores';
+  import { onMount } from 'svelte';
 
 	const API_BASE = import.meta.env.VITE_BACKEND_URL;
+
+  // Load user when the layout is mounted
+  onMount(loadUser);
 
 	const logout = async () => {
 		try {
@@ -70,7 +74,7 @@
 			{/if}
 
 			<!-- Right Side: Login/Logout -->
-			<div class="flex gap-4">git 
+			<div class="flex gap-4">
 				{#if $user}
 					<button on:click={logout} class="text-sm hover:underline text-red-300">LOGOUT</button>
 				{:else}
