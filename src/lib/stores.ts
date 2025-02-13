@@ -30,3 +30,14 @@ user.subscribe((value) => {
 		}
 	}
 });
+
+// Store for feedback messages
+export const feedback = writable<{ message: string; type: 'success' | 'error' } | null>(null);
+
+// Function to trigger feedback
+export const showFeedback = (message: string, type: 'success' | 'error') => {
+	feedback.set({ message, type });
+
+	// Clear after 3 seconds
+	setTimeout(() => feedback.set(null), 3000);
+};

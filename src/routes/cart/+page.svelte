@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+  import { showFeedback } from '$lib/stores';
 
 	type CartItem = {
 		isbn: string;
@@ -42,8 +43,9 @@
 			if (!response.ok) throw new Error('Failed to remove item.');
 			cart = cart.filter((item) => item.isbn !== isbn);
 			totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      showFeedback('Item(s) removed successfully!', 'success');
 		} catch (err) {
-			error = (err as Error).message;
+      showFeedback(`Failed to remove item(s): ${(err as Error).message}`, 'error');
 		}
 	};
 
@@ -57,12 +59,16 @@
 			if (!response.ok) throw new Error('Failed to place order.');
 
 			const data = await response.json();
-			alert(`Order placed successfully! Order ID: ${data.orderId}`);
+      showFeedback(`Order placed successfully! Order ID: ${data.orderId}`, 'success');
 
 			// Redirect to order confirmation page
 			goto(`/order/${data.orderId}`);
 		} catch (err) {
-			error = (err as Error).message;
+			if (err instanceof TypeError && err.message.includes('fetch')) {
+				showFeedback('Failed to connect to the server. Please check your internet or try again later.', 'error');
+			} else {
+				showFeedback((err as Error).message, 'error');
+			}
 		}
 	};
 </script>

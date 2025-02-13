@@ -1,7 +1,8 @@
 <script lang="ts">
-	const API_BASE = import.meta.env.VITE_BACKEND_URL;
-
 	import { onMount } from 'svelte';
+	import { showFeedback } from '$lib/stores';
+
+	const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 	type Book = {
 		isbn: string;
@@ -26,7 +27,7 @@
 			books = await response.json();
 
 			// Initialize quantities with default value of 1 for each book
-			books.forEach(book => {
+			books.forEach((book) => {
 				quantities[book.isbn] = 1;
 			});
 		} catch (err) {
@@ -34,19 +35,28 @@
 		}
 	});
 
-	const addToCart = async (isbn: string) => {
-		const qty = quantities[isbn] || 1; // Ensure at least 1 is sent
+	const addToCart = async (isbn: string, title: string) => {
 		try {
+			const qty = quantities[isbn] || 1; // Ensure at least 1 is sent
 			const response = await fetch(`${API_BASE}/api/cart`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
 				body: JSON.stringify({ isbn, qty })
 			});
-			if (!response.ok) throw new Error('Failed to add book to cart.');
-			alert(`Added ${qty} to cart!`);
+
+			if (!response.ok) {
+				const errorMessage = await response.text();
+				throw new Error(errorMessage || 'Failed to add book to cart.');
+			}
+
+			showFeedback(`Added ${qty} of "${title}" to cart!`, 'success');
 		} catch (err) {
-			alert((err as Error).message);
+			if (err instanceof TypeError && err.message.includes('fetch')) {
+				showFeedback('Failed to connect to the server. Please check your internet or try again later.', 'error');
+			} else {
+				showFeedback((err as Error).message, 'error');
+			}
 		}
 	};
 </script>
@@ -60,25 +70,21 @@
 				<h2 class="text-lg font-semibold">{book.title}</h2>
 				<p class="text-sm text-gray-600">by {book.author}</p>
 				<p class="font-bold text-blue-600">{book.price.toFixed(2)} kr</p>
-				
-        <!-- Button and Quantity Selection -->
-				<div class="flex items-center gap-2 mt-2">
-          <button
-            class="rounded bg-blue-600 px-4 py-2 text-white"
-            on:click={() => addToCart(book.isbn)}
-          >
-            Add to Cart
-          </button>
-        
-          <input
-            id="qty-{book.isbn}"
-            type="number"
-            bind:value={quantities[book.isbn]}
-            min="1"
-            class="w-16 p-2 border rounded text-black text-center h-[40px]"
-          />
-        </div>
 
+				<!-- Button and Quantity Selection -->
+				<div class="mt-2 flex items-center gap-2">
+					<button class="rounded bg-blue-600 px-4 py-2 text-white" on:click={() => addToCart(book.isbn, book.title)}>
+						Add to Cart
+					</button>
+
+					<input
+						id="qty-{book.isbn}"
+						type="number"
+						bind:value={quantities[book.isbn]}
+						min="1"
+						class="h-[40px] w-16 rounded border p-2 text-center text-black"
+					/>
+				</div>
 			</div>
 		{/each}
 	</div>

@@ -29,7 +29,7 @@
 	});
 </script>
 
-<h2 class="text-xl font-bold mb-4">Your Order History</h2>
+<h2 class="mb-4 text-xl font-bold">Your Order History</h2>
 
 {#if error}
 	<p class="text-red-600">{error}</p>
