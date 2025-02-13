@@ -66,6 +66,7 @@
 			<div class="flex gap-4">
 				{#if $user}
 					<a href="/books" class="text-sm hover:underline">BROWSE BOOKS</a>
+          <a href="/books/subject" class="text-sm hover:underline">BROWSE BOOKS BY SUBJECT</a>
 				{/if}
 			</div>
 

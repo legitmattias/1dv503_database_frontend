@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { showFeedback } from '$lib/stores';
 
-	export let data: { books: Book[]; query: string; searchType: string };
+	export let data: { books: Book[]; query: string; searchType: string; page: number; totalPages: number };
 
 	const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
@@ -27,7 +27,7 @@
 
 	const addToCart = async (isbn: string, title: string) => {
 		try {
-			const qty = quantities[isbn] || 1; // Ensure at least 1 is sent
+			const qty = quantities[isbn] || 1;
 			const response = await fetch(`${API_BASE}/api/cart`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -42,12 +42,13 @@
 
 			showFeedback(`Added ${qty} of "${title}" to cart!`, 'success');
 		} catch (err) {
-			if (err instanceof TypeError && err.message.includes('fetch')) {
-				showFeedback('Failed to connect to the server. Please check your internet or try again later.', 'error');
-			} else {
-				showFeedback((err as Error).message, 'error');
-			}
+			showFeedback((err as Error).message, 'error');
 		}
+	};
+
+	// Handle pagination
+	const changePage = (newPage: number) => {
+		window.location.href = `/search?${data.searchType}=${encodeURIComponent(data.query)}&page=${newPage}`;
 	};
 </script>
 
@@ -58,20 +59,19 @@
 {:else}
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
 		{#each data.books as book}
-			<div class="rounded bg-white p-4 shadow">
+			<div class="rounded bg-white p-4 shadow flex flex-col items-center text-center">
 				<h2 class="text-lg font-semibold">{book.title}</h2>
 				<p class="text-sm text-gray-600">by {book.author}</p>
 				<p class="font-bold text-blue-600">{book.price.toFixed(2)} kr</p>
 
 				<!-- Button and Quantity Selection -->
-				<div class="mt-2 flex items-center gap-2">
+				<div class="mt-2 flex items-center justify-center gap-2">
 					<button
-            class="rounded bg-blue-600 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-700 hover:scale-105"
-            on:click={() => addToCart(book.isbn, book.title)}
-          >
-            Add to Cart
-          </button>
-
+						class="rounded bg-blue-600 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-700 hover:scale-105"
+						on:click={() => addToCart(book.isbn, book.title)}
+					>
+						Add to Cart
+					</button>
 
 					<input
 						id="qty-{book.isbn}"
@@ -83,5 +83,26 @@
 				</div>
 			</div>
 		{/each}
+	</div>
+
+	<!-- Pagination Controls -->
+	<div class="flex justify-center mt-6 gap-4">
+		<button
+			on:click={() => changePage(data.page - 1)}
+			class="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+			disabled={data.page === 1}
+		>
+			← Previous
+		</button>
+
+		<p class="text-lg font-semibold">Page {data.page} of {data.totalPages}</p>
+
+		<button
+			on:click={() => changePage(data.page + 1)}
+			class="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+			disabled={data.page === data.totalPages}
+		>
+			Next →
+		</button>
 	</div>
 {/if}
