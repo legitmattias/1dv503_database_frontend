@@ -13,13 +13,17 @@
 		subject: string;
 	};
 
-	// Store quantity for each book
+	// Store quantity for each book (reactively updated when books change)
 	let quantities: Record<string, number> = {};
 
-	// Initialize quantities with default value of 1 for each book
-	data.books.forEach((book) => {
-		quantities[book.isbn] = 1;
-	});
+	// Ensure quantities are set whenever `data.books` updates
+	$: if (data.books) {
+		data.books.forEach((book) => {
+			if (!quantities[book.isbn]) {
+				quantities[book.isbn] = 1;
+			}
+		});
+	}
 
 	const addToCart = async (isbn: string, title: string) => {
 		try {
