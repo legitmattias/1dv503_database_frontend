@@ -1,7 +1,7 @@
 <script lang="ts">
 	export let data: { books: Book[]; query: string; searchType: string };
 
-  const API_BASE = import.meta.env.VITE_BACKEND_URL;
+	const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 	type Book = {
 		isbn: string;
@@ -10,21 +10,30 @@
 		price: number;
 		subject: string;
 	};
-  const addToCart = async (isbn: string) => {
+
+	// Store quantity for each book
+	let quantities: Record<string, number> = {};
+
+	// Initialize quantities with default value of 1 for each book
+	data.books.forEach(book => {
+		quantities[book.isbn] = 1;
+	});
+
+	const addToCart = async (isbn: string) => {
+		const qty = quantities[isbn] || 1; // Ensure at least 1 is sent
 		try {
 			const response = await fetch(`${API_BASE}/api/cart`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
-				body: JSON.stringify({ isbn, qty: 1 })
+				body: JSON.stringify({ isbn, qty })
 			});
 			if (!response.ok) throw new Error('Failed to add book to cart.');
-			alert('Book added to cart!');
+			alert(`Added ${qty} to cart!`);
 		} catch (err) {
 			alert((err as Error).message);
 		}
 	};
-  
 </script>
 
 <h2 class="mb-4 text-xl font-bold">Search Results for "{data.query}" ({data.searchType})</h2>
@@ -38,9 +47,25 @@
 				<h2 class="text-lg font-semibold">{book.title}</h2>
 				<p class="text-sm text-gray-600">by {book.author}</p>
 				<p class="font-bold text-blue-600">{book.price.toFixed(2)} kr</p>
-        <button class="mt-2 rounded bg-blue-600 px-4 py-2 text-white" on:click={() => addToCart(book.isbn)}>
-					Add to Cart
-				</button>
+
+				<!-- Button and Quantity Selection -->
+				<div class="flex items-center gap-2 mt-2">
+          <button
+            class="rounded bg-blue-600 px-4 py-2 text-white"
+            on:click={() => addToCart(book.isbn)}
+          >
+            Add to Cart
+          </button>
+        
+          <input
+            id="qty-{book.isbn}"
+            type="number"
+            bind:value={quantities[book.isbn]}
+            min="1"
+            class="w-16 p-2 border rounded text-black text-center h-[40px]"
+          />
+        </div>
+
 			</div>
 		{/each}
 	</div>
