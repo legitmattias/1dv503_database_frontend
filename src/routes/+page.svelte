@@ -8,13 +8,19 @@
 
 	<!-- Ensure buttons are centered properly -->
 	<nav class="mt-8 w-full max-w-3xl">
-		<div class="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+		<div class="grid gap-4 sm:grid-cols-2 md:grid-cols-2">
 			{#if $user}
 				<a
 					href="/books"
 					class="group flex items-center justify-center rounded-lg border-2 border-blue-600 bg-blue-50 bg-opacity-50 p-6 text-lg font-semibold text-blue-800 transition hover:bg-blue-600 hover:text-white"
 				>
-					Browse Books
+					Browse All Books
+				</a>
+        <a
+					href="/books/subject"
+					class="group flex items-center justify-center rounded-lg border-2 border-pink-600 bg-pink-50 bg-opacity-50 p-6 text-lg font-semibold text-pink-800 transition hover:bg-pink-600 hover:text-white"
+				>
+					Browse by Subject
 				</a>
 				<a
 					href="/order"
