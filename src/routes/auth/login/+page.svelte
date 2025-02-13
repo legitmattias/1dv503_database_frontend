@@ -25,7 +25,7 @@
 
 			const data = await response.json();
 			user.set(data.user); // Store user data in global store
-			showFeedback(`Login successful. Welcome ${data.user.fname}`, 'success');
+			showFeedback(`Login successful. Welcome ${data.user.fname}!`, 'success');
 
 			goto('/');
 		} catch (err) {

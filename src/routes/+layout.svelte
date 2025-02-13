@@ -3,7 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { user, loadUser } from '$lib/stores';
 	import { onMount } from 'svelte';
-  import FeedbackModal from '$lib/FeedbackModal.svelte';
+	import FeedbackModal from '$lib/FeedbackModal.svelte';
 
 	const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
