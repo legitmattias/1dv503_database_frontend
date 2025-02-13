@@ -65,9 +65,13 @@
 
 				<!-- Button and Quantity Selection -->
 				<div class="mt-2 flex items-center gap-2">
-					<button class="rounded bg-blue-600 px-4 py-2 text-white" on:click={() => addToCart(book.isbn, book.title)}>
-						Add to Cart
-					</button>
+					<button
+            class="rounded bg-blue-600 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-700 hover:scale-105"
+            on:click={() => addToCart(book.isbn, book.title)}
+          >
+            Add to Cart
+          </button>
+
 
 					<input
 						id="qty-{book.isbn}"
