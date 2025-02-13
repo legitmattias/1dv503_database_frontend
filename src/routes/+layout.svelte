@@ -40,24 +40,22 @@
 
 <div class="flex min-h-screen flex-col bg-gray-100">
 	<header class="bg-blue-600 p-4 text-white">
-    <div class="container mx-auto flex items-center justify-between">
-      <!-- Left Side: Title & Subtitle -->
-      <a href="/">
-        <div>
-          <h1 class="text-lg font-bold">The Bookstore</h1>
-          <p class="text-sm text-gray-200">Assignment 2 - Database, DV503</p>
-          <p class="text-sm text-gray-200">Created by Mattias Ubbesen</p>
-        </div>
-      </a>
-  
-      <!-- Right Side: Welcome Message -->
-      {#if $user}
-        <p>Welcome, {$user.fname}!</p>
-      {/if}
-    </div>
-  </header>
-  
-  
+		<div class="container mx-auto flex items-center justify-between">
+			<!-- Left Side: Title & Subtitle -->
+			<a href="/">
+				<div>
+					<h1 class="text-lg font-bold">The Bookstore</h1>
+					<p class="text-sm text-gray-200">Assignment 2 - Database, DV503</p>
+					<p class="text-sm text-gray-200">Created by Mattias Ubbesen</p>
+				</div>
+			</a>
+
+			<!-- Right Side: Welcome Message -->
+			{#if $user}
+				<p>Welcome, {$user.fname}!</p>
+			{/if}
+		</div>
+	</header>
 
 	<!-- Navigation Bar -->
 	<nav class="bg-gray-800 p-2 text-white">
@@ -66,7 +64,7 @@
 			<div class="flex gap-4">
 				{#if $user}
 					<a href="/books" class="text-sm hover:underline">BROWSE BOOKS</a>
-          <a href="/books/subject" class="text-sm hover:underline">BROWSE BOOKS BY SUBJECT</a>
+					<a href="/books/subject" class="text-sm hover:underline">BROWSE BOOKS BY SUBJECT</a>
 				{/if}
 			</div>
 
@@ -90,8 +88,8 @@
 			<!-- Right Side: Login/Logout -->
 			<div class="flex gap-4">
 				{#if $user}
-          <a href="/order" class="text-sm hover:underline">ORDER HISTORY</a>
-          <a href="/cart" class="text-sm hover:underline">MY CART</a>
+					<a href="/order" class="text-sm hover:underline">ORDER HISTORY</a>
+					<a href="/cart" class="text-sm hover:underline">MY CART</a>
 					<button on:click={logout} class="text-sm text-red-300 hover:underline">LOGOUT</button>
 				{:else}
 					<a href="/auth/login" class="text-sm hover:underline">LOGIN</a>

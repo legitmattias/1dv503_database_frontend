@@ -59,7 +59,7 @@
 {:else}
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
 		{#each data.books as book}
-			<div class="rounded bg-white p-4 shadow flex flex-col items-center text-center">
+			<div class="flex flex-col items-center rounded bg-white p-4 text-center shadow">
 				<h2 class="text-lg font-semibold">{book.title}</h2>
 				<p class="text-sm text-gray-600">by {book.author}</p>
 				<p class="font-bold text-blue-600">{book.price.toFixed(2)} kr</p>
@@ -67,7 +67,7 @@
 				<!-- Button and Quantity Selection -->
 				<div class="mt-2 flex items-center justify-center gap-2">
 					<button
-						class="rounded bg-blue-600 px-4 py-2 text-white transition duration-300 ease-in-out hover:bg-blue-700 hover:scale-105"
+						class="rounded bg-blue-600 px-4 py-2 text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-blue-700"
 						on:click={() => addToCart(book.isbn, book.title)}
 					>
 						Add to Cart
@@ -86,10 +86,10 @@
 	</div>
 
 	<!-- Pagination Controls -->
-	<div class="flex justify-center mt-6 gap-4">
+	<div class="mt-6 flex justify-center gap-4">
 		<button
 			on:click={() => changePage(data.page - 1)}
-			class="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+			class="rounded bg-gray-200 px-4 py-2 disabled:opacity-50"
 			disabled={data.page === 1}
 		>
 			← Previous
@@ -99,7 +99,7 @@
 
 		<button
 			on:click={() => changePage(data.page + 1)}
-			class="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+			class="rounded bg-gray-200 px-4 py-2 disabled:opacity-50"
 			disabled={data.page === data.totalPages}
 		>
 			Next →
