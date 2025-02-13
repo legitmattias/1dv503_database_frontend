@@ -16,7 +16,6 @@ export const load: PageLoad = async ({ fetch, url }) => {
 		let books = [];
 		let totalPages = 1;
 		if (subject) {
-			console.log(`🔍 Fetching books for subject: "${subject}" (page: ${page})`);
 			const booksRes = await fetch(
 				`${API_BASE}/api/books/subject?name=${encodeURIComponent(subject)}&page=${page}&limit=${limit}`,
 				{ credentials: 'include' }
