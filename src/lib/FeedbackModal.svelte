@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { feedback } from '$lib/stores'; // Store to control modal visibility
+	import { feedback } from '$lib/stores';
 
 	let message = '';
 	let type: 'success' | 'error' = 'success';

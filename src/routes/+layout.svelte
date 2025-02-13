@@ -1,8 +1,9 @@
 <script lang="ts">
 	import '../app.css';
 	import { goto } from '$app/navigation';
-	import { user, loadUser, feedback } from '$lib/stores';
+	import { user, loadUser } from '$lib/stores';
 	import { onMount } from 'svelte';
+  import FeedbackModal from '$lib/FeedbackModal.svelte';
 
 	const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
@@ -35,15 +36,7 @@
 </script>
 
 <!-- Feedback Modal -->
-{#if $feedback}
-	<div
-		class="fixed left-1/2 top-5 w-80 -translate-x-1/2 transform rounded bg-white p-4 text-center shadow-lg"
-		class:border-red-500={$feedback.type === 'error'}
-		class:border-green-500={$feedback.type === 'success'}
-	>
-		<p class={$feedback.type === 'error' ? 'text-red-600' : 'text-green-600'}>{$feedback.message}</p>
-	</div>
-{/if}
+<FeedbackModal />
 
 <div class="flex min-h-screen flex-col bg-gray-100">
 	<header class="bg-blue-600 p-4 text-white">
