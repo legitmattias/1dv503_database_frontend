@@ -45,6 +45,7 @@
 		<div class="container mx-auto flex items-center justify-between">
 			<div class="flex gap-4">
 				<a href="/books" class="text-sm hover:underline">BROWSE BOOKS</a>
+        <a href="/order" class="text-sm hover:underline">ORDER HISTORY</a>
 				<a href="/cart" class="text-sm hover:underline">MY CART</a>
 			</div>
 
